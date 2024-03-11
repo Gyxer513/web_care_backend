@@ -8,7 +8,6 @@ import { ConfigService } from '@nestjs/config';
 export class StorageApiService {
   login: string;
   password: string;
-  token: string;
   private readonly logger = new Logger(StorageApiService.name);
   constructor(
     private readonly httpService: HttpService,
@@ -19,20 +18,14 @@ export class StorageApiService {
   }
 
   async updateToken(): Promise<string> {
-    const login = 'dev@eremeev19';
-    const password = 'dev9999';
-    const base64Credentials = btoa(`${login}:${password}`);
-    //   const base64Credentials = btoa(`${this.login}:${this.password}`);
+    const base64Credentials = btoa(`${this.login}:${this.password}`);
     const { data } = await firstValueFrom(
       this.httpService
-        .get<string>(
-          'https://api.moysklad.ru/api/remap/1.2/entity/counterparty',
-          {
-            headers: {
-              Authorization: `Basic ${base64Credentials}`,
-            },
+        .get<any>('https://api.moysklad.ru/api/remap/1.2/entity/counterparty', {
+          headers: {
+            Authorization: `Basic ${base64Credentials}`,
           },
-        )
+        })
         .pipe(
           catchError((error: AxiosError) => {
             this.logger.error(error.response.data);
@@ -40,7 +33,7 @@ export class StorageApiService {
           }),
         ),
     );
-    return (this.token = data);
+    return data.rows;
   }
 
   /* async findAll(): Promise<string> {
