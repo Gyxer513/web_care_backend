@@ -1,12 +1,23 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { StorageApiService } from './storage-api.service';
+import { IQueryType } from './storage-api.types';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('storage-api')
+@ApiTags('Storage-api')
 export class StorageApiController {
   constructor(private readonly storageApiService: StorageApiService) {}
 
-  @Post()
+  /*@Get()
   async getAllData() {
-    return await this.storageApiService.updateToken();
+    return await this.storageApiService.getAllData();
+  }*/
+
+  @Get()
+  async getPaginationUserData(@Query() query: IQueryType) {
+    return await this.storageApiService.getPaginationData(
+      query.limit,
+      query.offset,
+    );
   }
 }
