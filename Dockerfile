@@ -16,5 +16,5 @@ RUN npm i pm2 -g \
 COPY --from=builder /app/dist ./dist/
 COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
 
-EXPOSE 3001
+EXPOSE 3000
 CMD [ "pm2-runtime", "start", "ecosystem.config.js"]
