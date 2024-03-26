@@ -5,8 +5,8 @@ import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule, HttpModule],
-  controllers: [StorageApiController],
-  providers: [StorageApiService],
+	imports: [ConfigModule, HttpModule],
+	controllers: [StorageApiController],
+	providers: [StorageApiService],
 })
 export class StorageApiModule {}
