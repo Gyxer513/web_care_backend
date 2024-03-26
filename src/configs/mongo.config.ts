@@ -1,6 +1,5 @@
 import { ConfigService } from '@nestjs/config';
 import { MongooseModuleOptions } from '@nestjs/mongoose';
-import { getConfigFile } from 'ts-loader/dist/config';
 
 export const getMongoConfig = async (
   configService: ConfigService,
