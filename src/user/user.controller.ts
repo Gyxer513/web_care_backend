@@ -28,9 +28,9 @@ export class UserController {
   @Post()
   login() {}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get()
+  findOne() {
+    return this.userService.findAll();
   }
 
   @Patch(':id')
@@ -40,6 +40,6 @@ export class UserController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }

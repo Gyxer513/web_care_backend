@@ -6,6 +6,7 @@ import { genSalt, hash } from 'bcryptjs';
 import { UserDto } from './dto/user.dto';
 import { AdminDto } from './dto/admin.dto';
 import { ConfigService } from '@nestjs/config';
+import {Role} from "./entities/role.enum";
 
 @Injectable()
 export class UserService {
@@ -23,7 +24,7 @@ export class UserService {
         const newUser = new this.userModel({
           email: login,
           passwordHash: await hash(password, salt),
-          role: 'admin',
+          role: Role.ADMIN,
         });
         return newUser.save();
       }
@@ -43,15 +44,19 @@ export class UserService {
     return newUser.save();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findByLogin(login: number) {
+    return this.userModel.findOne({ login }).exec();
   }
 
   update(id: number, updateUserDto) {
     return `This action updates a #${id} user`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async findAll() {
+    return this.userModel.find({});
+  }
+
+  async remove(id: string) {
+    return this.userModel.findByIdAndDelete(id);
   }
 }
