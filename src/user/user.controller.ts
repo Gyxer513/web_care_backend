@@ -20,7 +20,7 @@ import {
   USER_ALREADY_EXISTS_ERROR,
 } from '../utils/constants/error.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
-import {RolesGuard} from "../auth/guards/admin.role.guard";
+import { RolesGuard } from '../auth/guards/admin.role.guard';
 
 @Controller('user')
 export class UserController {
@@ -55,7 +55,7 @@ export class UserController {
   }
 
   @Get()
-  findOne() {
+  findAll() {
     return this.userService.findAll();
   }
 
@@ -65,7 +65,8 @@ export class UserController {
   }
   @UseGuards(RolesGuard, JwtAuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(id);
+  async remove(@Param('id') id: string) {
+    const deletedUser = await this.userService.remove(id);
+    return `Пользователь ${deletedUser.login} удален`
   }
 }

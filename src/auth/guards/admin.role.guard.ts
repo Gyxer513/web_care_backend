@@ -16,7 +16,7 @@ export class RolesGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const { user }: { user: User } = await context.switchToHttp().getRequest();
-    let userData: User = await this.userService.findUser(user);
+    const userData: User = await this.userService.findUser(user);
     if (userData?.role !== Role.ADMIN) {
       throw new HttpException(ADMIN_EXEPTION_ERROR, HttpStatus.BAD_REQUEST);
     }
