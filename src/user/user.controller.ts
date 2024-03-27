@@ -20,6 +20,7 @@ import {
   USER_ALREADY_EXISTS_ERROR,
 } from '../utils/constants/error.constants';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import {RolesGuard} from "../auth/guards/admin.role.guard";
 
 @Controller('user')
 export class UserController {
@@ -29,7 +30,6 @@ export class UserController {
   async createAdmin(@Body() newAdminData: AdminDto) {
     const { login } = newAdminData;
     const findUser = await this.userService.findByLogin(login);
-    console.log(findUser);
     if (findUser) {
       throw new BadRequestException(USER_ALREADY_EXISTS_ERROR);
     }
@@ -41,7 +41,7 @@ export class UserController {
   }
 
   @Post()
-  async createUser(@Body() newAdminData: AdminDto) {
+  async createUser(@Body() newAdminData: UserDto) {
     const { login } = newAdminData;
     const findUser = await this.userService.findByLogin(login);
     if (findUser) {
@@ -63,7 +63,7 @@ export class UserController {
   update(@Param('id') id: string, @Body() updateUserDto: UserDto) {
     return this.userService.update(+id, updateUserDto);
   }
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(RolesGuard, JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(id);

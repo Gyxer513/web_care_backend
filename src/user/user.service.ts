@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.model';
 import { Model } from 'mongoose';
@@ -7,7 +7,6 @@ import { UserDto } from './dto/user.dto';
 import { AdminDto } from './dto/admin.dto';
 import { ConfigService } from '@nestjs/config';
 import { Role } from './entities/role.enum';
-import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @Injectable()
 export class UserService {
@@ -56,6 +55,9 @@ export class UserService {
 
   async findAll() {
     return this.userModel.find({});
+  }
+  async findUser(login: any) {
+    return this.userModel.findOne({ login }).exec();
   }
   async remove(id: string) {
     return this.userModel.findByIdAndDelete(id);
