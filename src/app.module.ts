@@ -2,11 +2,11 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { StorageApiModule } from './storage-api/storage-api.module';
-import {ConfigModule, ConfigService} from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
-import {getConfigFile} from "ts-loader/dist/config";
-import {getMongoConfig} from "./configs/mongo.config";
+import { getMongoConfig } from './configs/mongo.config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -14,10 +14,11 @@ import {getMongoConfig} from "./configs/mongo.config";
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: getMongoConfig
+      useFactory: getMongoConfig,
     }),
     StorageApiModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

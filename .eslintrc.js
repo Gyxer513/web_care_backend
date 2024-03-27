@@ -22,7 +22,7 @@ module.exports = {
     "prettier/prettier": ["error",
       {
         "singleQuote": true,
-        "useTabs": true,
+        "useTabs":false,
         "semi": true,
         "trailingComma": "all",
         "bracketSpacing": true,

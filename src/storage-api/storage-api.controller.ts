@@ -6,15 +6,15 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('storage-api')
 @ApiTags('Storage-api')
 export class StorageApiController {
-	constructor(private readonly storageApiService: StorageApiService) {}
+  constructor(private readonly storageApiService: StorageApiService) {}
 
-	/*@Get()
+  /*@Get()
   async getAllData() {
     return await this.storageApiService.getAllData();
   }*/
 
-	@Get()
-	async getPaginationUserData(@Query() query: IQueryType) {
-		return await this.storageApiService.getPaginationData(query.limit, query.offset);
-	}
+  @Get()
+  async getPaginationUserData(@Query() query: IQueryType) {
+    return await this.storageApiService.getPaginationData(query.limit, query.offset);
+  }
 }
